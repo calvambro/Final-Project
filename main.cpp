@@ -123,6 +123,7 @@ int main(){
    return 0;
 }
 
+
 /*BANK MANAGEMENT SYSTEM
 
 1. Create Account
@@ -136,3 +137,4 @@ int main(){
 	max 5mil
 4. close an account
 5. main menu*/
+
