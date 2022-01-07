@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct nasabah
 {  
@@ -54,9 +55,18 @@ void deposit(){
 
    //nanti diisi mencari nomor rekening
 
-   printf("Masukan jumlah uang yang ingin disetor : ");
+   printf("Masukan jumlah uang yang ingin disetor (minimal 100.000) : ");
    scanf("%lld", &setoran);
 
+   while (setoran < 100000)
+   {
+      printf("Anda tidak mencapai nilai minimum untuk melakukan deposit\n");
+      printf("Silahkan masukan ulang nominal yang ingin disetor : ");
+      scanf("%lld", &setoran);
+   }
+
+   printf("")
+   
 
 }
 
@@ -64,60 +74,57 @@ void deposit_withdraw(){
    int jenis;
    printf("Jenis transaksi apa yang ingin dilakukan?\n");
    printf("1. Menyetor Uang (Deposit)\n");
-   printf("2. Menarik Uang (Withdraw)");
+   printf("2. Menarik Uang (Withdraw)\n");
    printf("Masukan sesuai dengan nomor : ");
    scanf("%d", &jenis);
+
+   while(jenis < 1 || jenis > 2){
+      printf("Angka yang anda masukan salah\n");
+      printf("Silahkan masukan angka yang benar : ");
+      scanf("%d", &jenis);
+   }
 
    if (jenis == 1)
    {
       deposit();
    } else if(jenis == 2){
       withdraw();
-   } else{
-      printf("Angka yang anda masukan salah \n");
-      printf("Silahkan masukan angka yang benar : ");
-      scanf("%d", &jenis);
-      if (jenis == 1)
-      {
-         deposit();
-      } else if(jenis == 2){
-         withdraw();
-      } else{
-         printf("Angka yang anda masukan salah \n");
-         printf("Silahkan masukan angka yang benar : ");
-         scanf("%d", &jenis);
-      }
-   }
+   } 
+   
    
 }
-
-
 
 int main(){
    int pilihan;
 
-   printf("SELAMAT DATANG DI BANK\n\n");
-   printf("======================");
-   printf("   Welcome to Bank");
+   printf("SELAMAT DATANG DI BANK\n");
+   printf("======================\n");
+   printf("   Welcome to Bank\n\n");
 
-   printf("Apa yang ingin anda lakukan ? \n");
-   printf("1. Membuat rekening\n");
-   printf("2. Deposit + Withdraw\n");
-   printf("3. Tutup Rekening\n");
-   printf("Masukan sesuai dengan nomor : ");
-   scanf("%d", &pilihan);
-
-   switch (pilihan)
+   while (true)
    {
-   case 1:
-      account();
-      break;
-   case 2:
-      deposit_withdraw();
-      break;
-   
-   default:
-      break;
+      printf("Apa yang ingin anda lakukan ? \n");
+      printf("1. Membuat rekening\n");
+      printf("2. Deposit + Withdraw\n");
+      printf("3. Tutup Rekening\n\n");
+      printf("0. Exit\n");
+      printf("Masukan sesuai dengan nomor : ");
+      scanf("%d", &pilihan);
+
+      switch (pilihan)
+      {
+      case 1:
+         account();
+         break;
+      case 2:
+         deposit_withdraw();
+         break;
+      case 0:
+         exit(0);
+         break;
+      default:
+         break;
+      }
    }
    
    return 0;
