@@ -19,7 +19,7 @@ void account(){
    time(&t);
 
    printf("Masukan nama rekening anda: ");
-   scanf("%s", name);
+   scanf("%[^\n]", name);
    getchar();
    printf("Masukan nomer telopon anda: ");
    scanf("%s", contacts);
@@ -65,7 +65,7 @@ void deposit(){
       scanf("%lld", &setoran);
    }
 
-   printf("")
+   printf("");
    
 
 }
@@ -96,6 +96,10 @@ void deposit_withdraw(){
 
 int main(){
    int pilihan;
+   struct nasabah nasabah[1000];
+
+   FILE *fp;
+   fp = fopen("nasabah.txt", "w+");
 
    printf("SELAMAT DATANG DI BANK\n");
    printf("======================\n");
@@ -106,8 +110,8 @@ int main(){
       printf("Apa yang ingin anda lakukan ? \n");
       printf("1. Membuat rekening\n");
       printf("2. Deposit + Withdraw\n");
-      printf("3. Tutup Rekening\n\n");
-      printf("0. Exit\n");
+      printf("3. Tutup Rekening\n");
+      printf("0. Exit\n\n");
       printf("Masukan sesuai dengan nomor : ");
       scanf("%d", &pilihan);
 
