@@ -12,16 +12,63 @@ struct nasabah
 };
 
 
+void account();
+void withdraw();
+void deposit();
+void deposit_withdraw();
+
+int main(){
+   int pilihan;
+   struct nasabah nasabah[1000];
+
+   FILE *fp;
+   fp = fopen("nasabah.txt", "w+");
+   fclose(fp);
+
+   printf("SELAMAT DATANG DI BANK\n");
+   printf("======================\n");
+   printf("   Welcome to Bank\n\n");
+
+   while (true)
+   {
+      printf("Apa yang ingin anda lakukan ? \n");
+      printf("1. Membuat rekening\n");
+      printf("2. Setor dan Tarik Tunai\n");
+      printf("3. Tutup Rekening\n");
+      printf("0. Exit\n\n");
+      printf("Masukan sesuai dengan nomor : ");
+      scanf("%d", &pilihan);
+
+      switch (pilihan)
+      {
+      case 1:
+         account();
+         break;
+      case 2:
+         deposit_withdraw();
+         break;
+      case 0:
+         exit(0);
+         break;
+      default:
+         break;
+      }
+   }
+   
+   return 0;
+}
+
 void account(){
-   char name[100], contacts[100], creationDate[100];
+   char nama[100], contacts[100], creationDate[100];
    long long initialSaving;
    time_t t;
    time(&t);
+   getchar();
 
    printf("Masukan nama rekening anda: ");
-   scanf("%[^\n]", name);
+   scanf("%[^\n]", nama);
    getchar();
-   printf("Masukan nomer telopon anda: ");
+   printf("Masukan nomer telepon anda: ");
    scanf("%s", contacts);
    getchar();
    printf("Masukan setoran awal anda: ");
@@ -36,10 +83,10 @@ void account(){
    strcpy(tanggal, ctime(&t));
 
    printf("Mohon periksa kembali data anda\n");
-   printf("Nama: %s\n", name);
+   printf("Nama: %s\n", nama);
    printf("Nomer Rekening: %s\n", contacts);
    printf("Tanggal rekening dibuat: %s", tanggal);
-   printf("Saldo anda sekarang: %lld", initialSaving);
+   printf("Saldo anda sekarang: %lld\n", initialSaving);
    
 }
 
@@ -73,8 +120,8 @@ void deposit(){
 void deposit_withdraw(){
    int jenis;
    printf("Jenis transaksi apa yang ingin dilakukan?\n");
-   printf("1. Menyetor Uang (Deposit)\n");
-   printf("2. Menarik Uang (Withdraw)\n");
+   printf("1. Setor Tunai (Deposit)\n");
+   printf("2. Tarik Tunai (Withdraw)\n");
    printf("Masukan sesuai dengan nomor : ");
    scanf("%d", &jenis);
 
@@ -84,54 +131,11 @@ void deposit_withdraw(){
       scanf("%d", &jenis);
    }
 
-   if (jenis == 1)
-   {
+   if (jenis == 1){
       deposit();
    } else if(jenis == 2){
       withdraw();
    } 
-   
-   
-}
-
-int main(){
-   int pilihan;
-   struct nasabah nasabah[1000];
-
-   FILE *fp;
-   fp = fopen("nasabah.txt", "w+");
-
-   printf("SELAMAT DATANG DI BANK\n");
-   printf("======================\n");
-   printf("   Welcome to Bank\n\n");
-
-   while (true)
-   {
-      printf("Apa yang ingin anda lakukan ? \n");
-      printf("1. Membuat rekening\n");
-      printf("2. Deposit + Withdraw\n");
-      printf("3. Tutup Rekening\n");
-      printf("0. Exit\n\n");
-      printf("Masukan sesuai dengan nomor : ");
-      scanf("%d", &pilihan);
-
-      switch (pilihan)
-      {
-      case 1:
-         account();
-         break;
-      case 2:
-         deposit_withdraw();
-         break;
-      case 0:
-         exit(0);
-         break;
-      default:
-         break;
-      }
-   }
-   
-   return 0;
 }
 
 
