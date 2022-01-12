@@ -35,6 +35,7 @@ int main(){
       printf("1. Membuat rekening\n");
       printf("2. Setor dan Tarik Tunai\n");
       printf("3. Tutup Rekening\n");
+      printf("4. Cek Saldo\n");
       printf("0. Exit\n\n");
       printf("Masukan sesuai dengan nomor : ");
       scanf("%d", &pilihan);
