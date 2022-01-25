@@ -13,26 +13,26 @@ struct nasabah
    char nama[100]; //untuk nama nasabah
    char date[100]; // untuk tanggal pembuatan rekening
    long long saldo; //untuk saldo rekening
-} nasabah[1000]; 
+} nasabah[1000]; // declare struct secara global
 
-void swap(struct nasabah a, struct nasabah b); //untuk menukar data
-void sortrek (struct nasabah list[]); //untuk melakukan sorting data pada array of struct
-int searchrek(struct nasabah list[], char x[], int low, int high);// untuk melakukan searching berdasarkan nomor rekening
+void swap(struct nasabah a, struct nasabah b); //untuk menukar data dibuat ambro
+void sortrek (struct nasabah list[]); //untuk melakukan sorting data pada array of struct dibuat ambro
+int searchrek(struct nasabah list[], char x[], int low, int high);// untuk melakukan searching berdasarkan nomor rekening dibuat ambro
 
 // Dibagi menjadi beberapa bagian sesuai dengan fitur
-void account(); //function membuat akun baru
-void withdraw(); //function untuk tarik tunai
-void deposit(); //function untuk setor tunai 
-void deposit_withdraw(); //function pilihan setor/tarik tunai
-void tutupRek(); //function untuk menutup rekening
-void cekSaldo(); //function untuk mengecek saldo nasabah
-void transfer(); //function untuk transfer dana nasabah
+void account(); //function membuat akun baru dibuat ambro
+void withdraw(); //function untuk tarik tunai dibuat wilson
+void deposit(); //function untuk setor tunai dibuat wilson
+void deposit_withdraw(); //function pilihan setor/tarik tunai dibuat wilson dan ambro
+void tutupRek(); //function untuk menutup rekening dibuat ambro
+void cekSaldo(); //function untuk mengecek saldo nasabah dibuat ambro
+void transfer(); //function untuk transfer dana nasabah dibuat wilson
 
-int main(){
+int main(){ // dibuat wilson
    //Deklarasi variable yang dibutuhkan
    int pilihan;
    
-   // file processing untuk melakukan input data dari file txt
+   // file processing untuk melakukan input data dari file txt dibuat ambro
    FILE *fp;
    fp = fopen("nasabah.txt", "r"); //membuka buffer area
    for(int i = 0; !feof(fp); i++){
@@ -45,7 +45,7 @@ int main(){
    printf("======================\n");
    printf("   Welcome to Bank\n");
 
-   // loop yang akan terus mengulang hingga program diminta keluar
+   // loop yang akan terus mengulang hingga program diminta keluar dibuat wilson
    while (true)
    {
       //meminta inputan untuk proses yang akan dilakukan
@@ -65,7 +65,7 @@ int main(){
         scanf("%d", &pilihan);
       }
 
-      // switch untuk melakukan proses yang dipilih
+      // switch untuk melakukan proses yang dipilih dibuat ambro dan wilson
       switch (pilihan)
       {
       case 1: // 1 untuk membuat rekening
@@ -74,27 +74,25 @@ int main(){
       case 2: // 2 untuk depo/wd
          deposit_withdraw();
          break;
-      case 3:
+      case 3: // 3 untuk menutup rekening
          tutupRek();
          break;
-      case 4:
+      case 4: // 4 untuk cek saldo rekening
          cekSaldo();
          break;
-      case 5:
+      case 5: // 5 untuk tranfer antar rekening
          transfer();
          break;
       case 0: // 0 untuk keluar program
         // melakukan print data nasabah ke file txt untuk digunakan ketika program dijalankan kembali
          fp = fopen("nasabah.txt", "w"); //membuka buffer area
          sortrek(nasabah); //data di sort
-         for(int i = 0; i<structlen; i++){
+         for(int i = 0; i<structlen; i++){ // untuk menaruh data nasabah pada file txt
            fprintf(fp, "%s#%s#%lld#%s\n", nasabah[i].norek,nasabah[i].nama, nasabah[i].saldo, nasabah[i].date); //melakukan printing seluruh data
          }
          fclose(fp); //menutup buffer area
 
          exit(0); //exit untuk keluar dari program
-         break;
-      default: // untuk memasukan ulang karena angka salah
          break;
       }
    }
@@ -124,7 +122,6 @@ void swap(struct nasabah *a, struct nasabah *b){
 
 //function sort menggunakan bubble sort
 void sortrek(struct nasabah list[1000]){
-  struct nasabah temp;
   for(int i = 0; i<structlen-1; i++){
     for(int j = 0; j<structlen-1-i; j++){
       if(strcmp(list[j].norek, list[j+1].norek) > 0){
@@ -159,7 +156,7 @@ void account(){
    char nama[100], contacts[100], creationDate[100];
    long long initialSaving;
 
-  time_t now = time(NULL);
+  time_t now = time(NULL); // untuk mendapatkan tanggal saat rekening dibuat secara otomatis
   struct tm *t = localtime(&now);
 
 
@@ -229,11 +226,13 @@ void withdraw(){
   while (setoran > 5000000 || setoran > nasabah[indexcari].saldo)
   {
     // input ulang jika nominal yang dimasukan lebih besar dari ketentuan atau saldo tidak mencukupi
-    if(setoran > 5000000 && setoran < nasabah[indexcari].saldo){
+    if(setoran > 5000000) // jika lebih dari maksimal tarik tunai
+    {
       printf("Anda melebihi nilai maximum untuk melakukan withdraw\n");
       printf("Silahkan masukan ulang nominal yang ingin ditarik : ");
       scanf("%lld", &setoran);
-    } else if(setoran < 5000000 && setoran > nasabah[indexcari].saldo){
+    } else if(setoran < 5000000 && setoran > nasabah[indexcari].saldo) // jika saldo tidak mencukupi
+    {
       printf("Saldo anda tidak mencukupi\n");
       printf("Silahkan masukan ulang nominal yang ingin ditarik : ");
       scanf("%lld", &setoran);
@@ -259,7 +258,7 @@ void deposit(){
    //nanti diisi mencari nomor rekening
    int indexcari = searchrek(nasabah, rekening, 0, structlen);
 
-   while(indexcari == -1){
+   while(indexcari == -1){ // ketika nomor rekeing tidak ditemukan
     printf("Nomor rekening yang anda masukan salah\n");
     printf("Silahkan masukan ulang nomor rekening anda : ");
     scanf("%s", rekening);
@@ -277,7 +276,7 @@ void deposit(){
       printf("Silahkan masukan ulang nominal yang ingin disetor : ");
       scanf("%lld", &setoran);
    }
-   nasabah[indexcari].saldo += setoran;
+   nasabah[indexcari].saldo += setoran; // menambahkan saldo nasabah
    
    // diisi konfirmasi deposit
    printf("Uang anda berhasil disetor!\n");
@@ -303,9 +302,9 @@ void deposit_withdraw(){
 
   // memanggil function sesuai jenis transaksi
    if (jenis == 1){
-      deposit();
+      deposit(); //melempar ke function deposit
    } else if(jenis == 2){
-      withdraw();
+      withdraw(); // melempar ke function withdraw
    } 
 } // end deposit withdraw
 
@@ -319,7 +318,7 @@ void cekSaldo(){
   
   //sorting data pada variable nasabah
   sortrek(nasabah);
-  int indexcari = searchrek(nasabah, rekening, 0, structlen);
+  int indexcari = searchrek(nasabah, rekening, 0, structlen); //mencari rekening nasabah
 
   //while loop jika rekening tidak ditemukan
   while(indexcari == -1){
@@ -363,6 +362,7 @@ void tutupRek(){
   nasabah[structlen].date[0] = '\0';
   nasabah[structlen].saldo = 0;
 
+  //konfirmasi rekening yang ditutup
   printf("Rekening %s telah ditutup\n", rekening);
 } // end tutuprek
 
@@ -387,6 +387,7 @@ void transfer(){
   scanf("%s", rektujuan);
   //mencari nomor rekening
   int indextujuan = searchrek(nasabah, rektujuan, 0, structlen);
+
   //loop jika rekening tidak ada
   while(indextujuan == -1){
     printf("Nomor rekening yand anda masukan tidak valid\n");
@@ -410,8 +411,9 @@ void transfer(){
   nasabah[indextujuan].saldo += nominal;
 
   printf("Transfer sukses\n");
-  
 }//end of transfer
+
+
 
 /*BANK MANAGEMENT SYSTEM
 
